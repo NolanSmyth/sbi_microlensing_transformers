@@ -1,0 +1,23 @@
+# --- Core Scientific Libraries ---
+torch~=2.5.1
+numpy~=2.2.2
+scipy~=1.15.2
+pandas
+
+# --- Simulation-Based Inference & MCMC ---
+sbi~=0.24.0
+emcee~=3.1.6
+dill~=0.4.0
+
+# --- Visualization ---
+matplotlib~=3.10.1
+corner~=2.2.3
+
+# --- Utilities ---
+tqdm~=4.67.1
+
+# --- Optional Experiment Tracking ---
+# comet_ml~=3.47.1
+
+# --- Microlensing Physics Engine ---
+VBMicrolensing==5.1.1

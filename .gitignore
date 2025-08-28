@@ -1,0 +1,11 @@
+.venv
+sbi-logs
+*.pkl
+*.out
+__pycache*
+*.csv
+# *.txt
+*.sh
+.comet.config
+/outputs/*
+.comet.config
