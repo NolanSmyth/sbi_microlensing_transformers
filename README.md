@@ -64,7 +64,7 @@ The pipeline estimates the posterior distribution for 5 key physical parameters 
 
 ## Running the Pipeline
 
-The pipeline is designed to be run sequentially. Key settings can be adjusted in `config.py`.
+The pipeline is designed to be run sequentially. Key settings can be adjusted in `config.py`. Note that the first two steps involve generating and training on simulated data, while subsequent steps focus on evaluation and analysis. A trained network is provided in this repository for convenience. Please note that a GPU is highly recommended to take advantage of the speed of the network.
 
 ### Step 1: Generate Base Simulations
 
@@ -99,7 +99,7 @@ Apply the trained posterior estimator to real astronomical data for the FFP cand
 python 4_analyze_kmt_2073.py
 ```
 
-### (Optional) Compare with MCMC
+### Compare with MCMC
 
 To quantify the speed and accuracy gains, compare the NPE results against a traditional MCMC fit using `emcee`.
 

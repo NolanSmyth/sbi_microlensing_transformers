@@ -1,6 +1,5 @@
 .venv
 sbi-logs
-*.pkl
 *.out
 __pycache*
 *.csv
