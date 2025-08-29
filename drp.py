@@ -6,8 +6,6 @@ from tqdm import tqdm
 __all__ = ("get_tarp_coverage", "get_drp_coverage")
 
 
-
-
 def _get_tarp_coverage_single(
     samples: np.ndarray,
     theta: np.ndarray,
@@ -15,7 +13,7 @@ def _get_tarp_coverage_single(
     metric: str = "euclidean",
     num_alpha_bins: Union[int, None] = None,
     norm: bool = True,
-    seed: Union[int, None] = None
+    seed: Union[int, None] = None,
 ) -> Tuple[np.ndarray, np.ndarray]:
     """
     Estimates coverage with the TARP method a single time.
@@ -37,7 +35,7 @@ def _get_tarp_coverage_single(
         seed: the seed to use for the random number generator. If ``None``, then no seed
 
     Returns:
-        Expected coverage probability (``ecp``) and credibility values (``alpha``) 
+        Expected coverage probability (``ecp``) and credibility values (``alpha``)
     """
     np.random.seed(seed)
 
@@ -103,20 +101,21 @@ def _get_tarp_coverage_single(
     f = np.sum((samples_distances < theta_distances), axis=0) / num_samples
 
     # Compute expected coverage
-    h, alpha = np.histogram(f, density=True, bins=num_alpha_bins, range=(0,1))
+    h, alpha = np.histogram(f, density=True, bins=num_alpha_bins, range=(0, 1))
     dx = alpha[1] - alpha[0]
     ecp = np.cumsum(h) * dx
     return np.concatenate([[0], ecp]), alpha
 
 
-def _get_tarp_coverage_bootstrap(samples: np.ndarray,
+def _get_tarp_coverage_bootstrap(
+    samples: np.ndarray,
     theta: np.ndarray,
     references: Union[str, np.ndarray] = "random",
     metric: str = "euclidean",
     num_alpha_bins: Union[int, None] = None,
     num_bootstrap: int = 100,
     norm: bool = True,
-    seed: Union[int, None] = None
+    seed: Union[int, None] = None,
 ) -> Tuple[np.ndarray, np.ndarray]:
     """
     Estimates uncertainties on the expected probability and credibility values calculated with the
@@ -145,22 +144,24 @@ def _get_tarp_coverage_bootstrap(samples: np.ndarray,
     if num_alpha_bins is None:
         num_alpha_bins = num_sims // 10
 
-    boot_ecp = np.empty(shape=(num_bootstrap, num_alpha_bins+1))
+    boot_ecp = np.empty(shape=(num_bootstrap, num_alpha_bins + 1))
     for i in tqdm(range(num_bootstrap)):
         idx = np.random.randint(low=0, high=num_sims, size=num_sims)
-        
+
         # Sample with replacement from the full set of simulations
         boot_samples = samples[:, idx, :]
         boot_theta = theta[idx, :]
 
-        boot_ecp[i, :], alpha = _get_tarp_coverage_single(boot_samples,
-                                                          boot_theta,
-                                                          references=references,
-                                                          metric=metric,
-                                                          num_alpha_bins=num_alpha_bins,
-                                                          norm=norm,
-                                                          seed=seed)
-    
+        boot_ecp[i, :], alpha = _get_tarp_coverage_single(
+            boot_samples,
+            boot_theta,
+            references=references,
+            metric=metric,
+            num_alpha_bins=num_alpha_bins,
+            norm=norm,
+            seed=seed,
+        )
+
     # ecp_mean = boot_ecp.mean(axis=0)
     # ecp_std = boot_ecp.std(axis=0)
     # alpha_mean = boot_alpha.mean(axis=0)
@@ -177,7 +178,7 @@ def get_tarp_coverage(
     num_bootstrap: int = 100,
     norm: bool = False,
     bootstrap: bool = False,
-    seed: Union[int, None] = None
+    seed: Union[int, None] = None,
 ) -> Tuple[np.ndarray, np.ndarray]:
     """
     Estimates coverage with the TARP method.
@@ -205,8 +206,18 @@ def get_tarp_coverage(
         If bootstrap is True, the ecp array has an extra dimension corresponding to the number of bootstrap iterations
     """
     if bootstrap:
-        ecp, alpha = _get_tarp_coverage_bootstrap(samples, theta, references, metric, num_alpha_bins, num_bootstrap,
-                                                  norm, seed)
+        ecp, alpha = _get_tarp_coverage_bootstrap(
+            samples,
+            theta,
+            references,
+            metric,
+            num_alpha_bins,
+            num_bootstrap,
+            norm,
+            seed,
+        )
     else:
-        ecp, alpha = _get_tarp_coverage_single(samples, theta, references, metric, num_alpha_bins, norm, seed)
+        ecp, alpha = _get_tarp_coverage_single(
+            samples, theta, references, metric, num_alpha_bins, norm, seed
+        )
     return ecp, alpha

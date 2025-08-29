@@ -4,11 +4,16 @@ from tqdm import trange
 from config import PRIOR, BASE_SIMS_PATH
 from utils import generate_base_simulation, ensure_dir, set_global_seeds
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--num-sims", type=int, default=50_000)
-    parser.add_argument("--shard-size", type=int, default=10_000,
-                        help="Process sims in chunks to keep memory stable")
+    parser.add_argument(
+        "--shard-size",
+        type=int,
+        default=10_000,
+        help="Process sims in chunks to keep memory stable",
+    )
     parser.add_argument("--seed", type=int, default=0)
     args = parser.parse_args()
 
@@ -35,6 +40,7 @@ def main():
     print(f"Saving base simulations to {BASE_SIMS_PATH}...")
     torch.save({"thetas": thetas, "xs": xs}, BASE_SIMS_PATH)
     print("Done.")
+
 
 if __name__ == "__main__":
     main()

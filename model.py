@@ -1,7 +1,7 @@
 import torch
 import math
 import torch.nn as nn
-from config import MAX_NUM_POINTS 
+from config import MAX_NUM_POINTS
 
 
 # --- Part 1: Positional Encoding ---
@@ -79,16 +79,16 @@ class TransformerEmbeddingNet(nn.Module):
             src, src_key_padding_mask=src_key_padding_mask
         )
 
-        # 4. Aggregate the output. 
+        # 4. Aggregate the output.
 
         # # 1. Build a float mask that is 1.0 for real data, 0.0 for pads
-        valid_mask = (~src_key_padding_mask).unsqueeze(-1).float()   # (B, L, 1)
+        valid_mask = (~src_key_padding_mask).unsqueeze(-1).float()  # (B, L, 1)
         # 2. Zero-out the padded positions, then sum and normalise
-        masked_output = output * valid_mask                          # (B, L, d_model)
-        embedding_sum = masked_output.sum(dim=1)                     # (B, d_model)
+        masked_output = output * valid_mask  # (B, L, d_model)
+        embedding_sum = masked_output.sum(dim=1)  # (B, d_model)
         # number of real time-steps per example (avoid division by zero with clamp)
-        lengths = valid_mask.sum(dim=1).clamp(min=1.0)               # (B, 1)
-        embedding = embedding_sum / lengths                          # final pooled vector
+        lengths = valid_mask.sum(dim=1).clamp(min=1.0)  # (B, 1)
+        embedding = embedding_sum / lengths  # final pooled vector
 
         # 5. Apply a final layer norm for stability
         embedding = self.layer_norm(embedding)
