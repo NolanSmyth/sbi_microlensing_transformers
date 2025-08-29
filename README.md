@@ -64,7 +64,7 @@ The pipeline estimates the posterior distribution for 5 key physical parameters 
 
 ## Running the Pipeline
 
-The pipeline is designed to be run sequentially. Key settings can be adjusted in `config.py`. Note that the first two steps involve generating and training on simulated data, while subsequent steps focus on evaluation and analysis. A trained network is provided in this repository for convenience. Please note that a GPU is highly recommended to take advantage of the speed of the network.
+The pipeline is designed to be run sequentially. Key settings can be adjusted in `config.py`. Note that the first two steps involve generating and training on simulated data, while subsequent steps focus on evaluation and analysis. A trained network `model_best.pkl` is provided in this repository for convenience and is used by default for the evaluations. Please note that a GPU is highly recommended to take advantage of the speed of the network.
 
 ### Step 1: Generate Base Simulations
 
