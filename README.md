@@ -4,13 +4,10 @@ This repository contains the complete pipeline for the paper *"Transformer Embed
 
 ## Features
 
--   **End-to-End Pipeline**: From data simulation to model evaluation and application on real astronomical data.
--   **High-Fidelity Simulations**: Generates microlensing events using `VBMicrolensing`, including finite-source effects.
 -   **Robust Data Augmentation**: On-the-fly augmentation simulates realistic observing conditions, including seasonal gaps, dropouts, and photometric noise.
 -   **Modern Architecture**: A Transformer encoder learns a summary representation of the light curve, naturally handling irregular time sampling and variable-length inputs.
--   **Fast & Accurate Inference**: Amortized inference provides posterior estimates orders of magnitude faster than traditional methods like MCMC.
--   **Rigorous Validation**: Includes code for performance validation using injected-recovered plots and coverage diagnostics.
--   **Real-World Application**: A dedicated script to analyze the short-duration FFP candidate event KMT-2019-BLG-2073.
+-   **Fast & Calibrated Inference**: Amortized inference provides posterior estimates orders of magnitude faster than traditional methods like MCMC.
+-   **Validation**: Includes code for performance validation using injected-recovered plots and coverage diagnostics.
 
 ## The Model
 
