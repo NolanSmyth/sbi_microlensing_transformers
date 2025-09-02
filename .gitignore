@@ -4,7 +4,6 @@ sbi-logs
 __pycache*
 *.csv
 # *.txt
-*.sh
 .comet.config
 /outputs/*
 .comet.config
